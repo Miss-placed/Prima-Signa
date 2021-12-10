@@ -39,7 +39,7 @@
   padding:10px 25px;
   font-weight: 100;
   background-blend-mode: overlay;
-  background-color:var(--clr-black);
+  background-color:var(--clr-black-100);
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;

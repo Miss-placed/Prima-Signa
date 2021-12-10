@@ -2,7 +2,7 @@
 	box-sizing: border-box;
 }
 :root{
-	--clr-black: rgb(8, 8, 8);
+	--clr-black: rgb(15, 15, 15);
 	--clr-grey-d: rgb(44, 44, 44);
 	--clr-grey-l: rgb(180, 180, 180);
 	--clr-white:white;
@@ -11,7 +11,9 @@
 	--clr-green: rgb(1, 134, 23);
 	--clr-black-100: rgb(31, 31, 31);
 }
-
+p{
+	margin:0;
+}
 body,
 main,
 aside {
