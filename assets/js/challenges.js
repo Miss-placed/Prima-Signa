@@ -2,93 +2,65 @@
 const challengeTypes = {
     multiplayer: "Multiplayer",
     zombies: "Zombies",
-    campaign: "Campaign",
 }
 
 const allCategories = {
     career: "Career",
-    battleHardened: "Battle Hardened",
-    requiemAdvancement: "Requiem Advancement",
-    story: "Story",
-    darkOps: "Dark Ops",
-    seasonal: "Seasonal",
 };
 
 const allSubCategories = {
     [allCategories.career]: {
+        counterMeasures: "Counter Measures",
         bootCamp: "Boot Camp",
+        grizzledVeteran: "Grizzled Veteran",
         fieldSpecialist: "Field Specialist",
         eliteOperator: "Elite Operator",
-        counterMeasures: "Counter Measures",
-        dieMaschineReport: "Die Maschine Report",
-        grizzledVeteran: "Grizzled Veteran",
-    },
-    [allCategories.battleHardened]: {
-        killer: "Killer",
-        goingHam: "Going Ham",
+        operations: "Operations",
         humiliation: "Humiliation",
-        precision: "Precision",
-        returnFire: "Return Fire",
-        zombieHunter: "Zombie Hunter",
-        elementalist: "Elementalist",
         tactician: "Tactician",
-        silverbackExpedition: "Silverback Expedition",
-        gorillaStalker: "Gorilla Stalker",
+        killer: "Killer",
+        precision: "Precision",
+        darkPact: "Dark Pact",
+        looter: "Looter",
+        killerOfTheDead: "Killer Of The Dead",
+        missionCritical: "Mission Critical",
     },
-    [allCategories.requiemAdvancement]: {
-        forsakenReport: "Forsaken Report",
-        mauerDerTotenReport: "Mauer der Toten Report",
-        firebaseZReport: "Firebase Z Report",
-        fieldResearcher: "Field Researcher",
-        surveyor: "Surveyor",
-        exterminator: "Exterminator",
-    },
-    [allCategories.story]: {
-        loyalAgent: "Loyal Agent",
-        bloodthirsty: "Bloodthirsty",
-        explorer: "Explorer",
-        clandestine: "Clandestine",
-        highlyProficient: "Highly Proficient",
-    },
-    [allCategories.seasonal]: {
-        season1: seasons.season1,
-        season2: seasons.season2,
-        season3: seasons.season3,
-        season4: seasons.season4,
-        season5: seasons.season5,
-        season6: seasons.season6
-    }
 }
 
 let challengeCategories = {
-    [challengeTypes.multiplayer]: [allCategories.seasonal, allCategories.career, allCategories.battleHardened, allCategories.darkOps],
-    [challengeTypes.zombies]: [allCategories.seasonal, allCategories.career, allCategories.battleHardened, allCategories.requiemAdvancement, allCategories.darkOps],
-    [challengeTypes.campaign]: [allCategories.story, allCategories.darkOps],
+    [challengeTypes.multiplayer]: [allCategories.career],
+    [challengeTypes.zombies]: [allCategories.career],
 };
 let challengeSubCategories = initSubCategories();
 function initSubCategories() {
     const career = allSubCategories[allCategories.career];
-    const batHard = allSubCategories[allCategories.battleHardened];
-    const reqAd = allSubCategories[allCategories.requiemAdvancement];
-    const story = allSubCategories[allCategories.story];
 
     return {
         [challengeTypes.multiplayer]: {
-            [allCategories.seasonal]: [seasons.season1, seasons.season2, seasons.season3, seasons.season4, seasons.season5, seasons.season6],
-            [allCategories.career]: [career.bootCamp, career.fieldSpecialist, career.eliteOperator, career.counterMeasures, career.grizzledVeteran],
-            [allCategories.battleHardened]: [batHard.killer, batHard.goingHam, batHard.humiliation, batHard.precision, batHard.returnFire],
-            [allCategories.darkOps]: [],
+            [allCategories.career]: [
+                career.counterMeasures,
+                career.bootCamp,
+                career.grizzledVeteran,
+                career.fieldSpecialist,
+                career.eliteOperator,
+                career.operations,
+                career.humiliation,
+                career.tactician,
+                career.killer,
+                career.precision,
+            ],
+
         },
         [challengeTypes.zombies]: {
-            [allCategories.seasonal]: [seasons.season1, seasons.season2, seasons.season3, seasons.season4, seasons.season5, seasons.season6],
-            [allCategories.career]: [career.dieMaschineReport, career.bootCamp, career.grizzledVeteran],
-            [allCategories.battleHardened]: [batHard.zombieHunter, batHard.elementalist, batHard.tactician, batHard.silverbackExpedition, batHard.gorillaStalker],
-            [allCategories.requiemAdvancement]: [reqAd.forsakenReport, reqAd.mauerDerTotenReport, reqAd.firebaseZReport, reqAd.fieldResearcher, reqAd.surveyor, reqAd.exterminator],
-            [allCategories.darkOps]: [],
-        },
-        [challengeTypes.campaign]: {
-            [allCategories.story]: [story.loyalAgent, story.bloodthirsty, story.explorer, story.clandestine, story.highlyProficient],
-            [allCategories.darkOps]: [],
+            [allCategories.career]: [
+                career.bootCamp,
+                career.grizzledVeteran,
+                career.darkPact,
+                career.looter,
+                career.killerOfTheDead,
+                career.missionCritical,
+            ],
+
         },
     };
 }
@@ -99,7 +71,7 @@ function renderCards(setState = true) {
     let filteredMasterChallenge = Challenges.masterChallenges;
     const cardCont = document.querySelector('#card-container');
     const masteryCont = document.querySelector('#mastery-progress');
-    
+
     const type = getSelectedType();
     const category = getSelectedCategory();
     const subCategory = getSelectedSubCategory();
@@ -108,7 +80,7 @@ function renderCards(setState = true) {
     addCardsToContainer(cardCont, filteredChallenges, getCardHtml);
     addCardsToContainer(masteryCont, filteredMasterChallenge, getMasteryHtml);
     const typeId = getKeyByValue(challengeTypes, type);
-    let subCategoryId = getKeyByValue(allCategories, allCategories.darkOps); 
+    let subCategoryId = getKeyByValue(allCategories, allCategories.darkOps);
     if (category !== allCategories.darkOps) {
         Object.values(allCategories).forEach((ct) => {
             const categoryKey = allSubCategories[ct];
@@ -294,7 +266,7 @@ function renderNav(selectedType, selectedCategory, selectedSubCategory) {
 }
 
 function renderTypes(navbar, selectedType) {
-    const optionArr = [challengeTypes.multiplayer, challengeTypes.zombies, challengeTypes.campaign];
+    const optionArr = [challengeTypes.multiplayer, challengeTypes.zombies];
     let options = ``;
     optionArr.forEach(option => {
         options += `<li onclick="changeTypeMenu(this)" ${selectedType == option ? "selected" : ""} value="${option}">
@@ -394,7 +366,7 @@ function changeSubCategoryMenu(x) {
 function getCategory(typeId, sbCatId) {
     let type = challengeTypes.zombies; category = allCategories.career; subCategory = allSubCategories[allCategories.career].dieMaschineReport;
     if (typeId && sbCatId) {
-        if (allCategories[sbCatId] === allCategories.darkOps){
+        if (allCategories[sbCatId] === allCategories.darkOps) {
             type = challengeTypes[typeId];
             category = allCategories[sbCatId];
             subCategory = "";
@@ -446,11 +418,11 @@ function getCategories() {
 function onLoadChallengeTracker() {
     LoadChallengeTracker();
 
-    window.onpopstate = function(event) {
+    window.onpopstate = function (event) {
         // https://developer.mozilla.org/en-US/docs/Web/API/History_API
         // console.log("location: " + document.location + ", state: " + JSON.stringify(event.state));
         LoadChallengeTracker(false);
-      };
+    };
 }
 
 function LoadChallengeTracker(setState = true) {

@@ -138,3 +138,7 @@ nav ul>div>li>.complete {
 nav ul>div>li[complete]>.complete {
 	display: initial;
 }
+
+#category{
+	display:none;
+}
